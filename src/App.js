@@ -14,8 +14,8 @@ class App extends Component {
       categories: []
     }
   }
-  createNote(title, text) {
-    const newNote = { title, text }
+  createNote(title, text, category) {
+    const newNote = { title, text, category }
     const newArrayNotes = [...this.setState.notes, newNote]
     const newState = {
       notes: newArrayNotes
@@ -38,7 +38,10 @@ class App extends Component {
   render() {
     return (
       <section className="content">
-        <FormCadastro createNote={this.createNote.bind(this)} />
+        <FormCadastro 
+          categories={this.state.categories}
+          createNote={this.createNote.bind(this)} 
+        />
         <main className="main-content">
           <ListaCategorias
             addCategory={this.addCategorybind(this)}

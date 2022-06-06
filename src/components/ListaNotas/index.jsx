@@ -13,6 +13,7 @@ class ListaNotas extends Component {
                 title={note.title}
                 text={note.text}
                 deleteNote={this.props.deleteNote}
+                category={note.category}
               />
             </li>)
         })}
