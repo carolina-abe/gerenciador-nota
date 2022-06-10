@@ -6,6 +6,17 @@ class FormCadastro extends Component {
     this.title = ""
     this.text = ""
     this.category = "No category"
+    this.state = { categories: [] }
+    this.newCategories = this.newCategories.bind(this)
+  }
+  componentDidMount() {
+    this.props.categories.subscribe(this.newCategories.bind(this.newCategories))
+  }
+  componentWillUnmount() { 
+    this.props.categories.unsubscribe(this.newCategories.bind(this.newCategories))
+  }
+  newCategories(categories) {
+    this.setState({ ...this.state, categories })
   }
   _handleChangeCategory(event) {
     event.stopPropagation()
@@ -32,9 +43,9 @@ class FormCadastro extends Component {
       >
         <select onChange={this._handleChangeCategory.bind(this)}>
           <option defaultValue>Sem categoria</option>
-          {this.props.categories.map((category) => {
+          {this.props.categories.map((category, index) => {
             return (
-              <option>{category}</option>
+              <option key={index}>{category}</option>
             )
           })}
         </select>

@@ -4,52 +4,32 @@ import ListaNotas from "./components/ListaNotas";
 import ListaCategorias from "./components/ListaCategorias";
 import "./assets/App.css";
 import "./assets/index.css";
+import Categories from "./data/categories";
+import ListNotes from "./data/notes";
 
 class App extends Component {
 
   constructor() {
     super()
-    this.state = {
-      notes: [],
-      categories: []
-    }
-  }
-  createNote(title, text, category) {
-    const newNote = { title, text, category }
-    const newArrayNotes = [...this.setState.notes, newNote]
-    const newState = {
-      notes: newArrayNotes
-    }
-    this.setState(newState)
-  }
-
-  addCategory(categoryName) {
-    const newArrayCategories = [...this.state.categories, categoryName]
-    const newState = {...this.state, categories: newArrayCategories}
-    this.setState(newState)
-  }
-
-  deleteNote(index) {
-    let arrayNotes = this.state.notes
-    arrayNotes.splice(index, 1)
-    this.state({ notes: arrayNotes })
+    this.categories = new Categories()
+    this.notes = new ListNotes()
   }
 
   render() {
     return (
       <section className="content">
-        <FormCadastro 
-          categories={this.state.categories}
-          createNote={this.createNote.bind(this)} 
+        <FormCadastro
+          categories={this.categories}
+          createNote={this.notes.addNote.bind(this.notes)}
         />
         <main className="main-content">
           <ListaCategorias
-            addCategory={this.addCategorybind(this)}
-            categories={this.state.categories}
+            addCategory={this.categories.addCategory.bind(this.categories)}
+            categories={this.categories}
           />
           <ListaNotas
-            notas={this.state.notes}
-            deleteNote={this.deleteNote.bind(this)}
+            notas={this.notes.notes}
+            deleteNote={this.notes.deleteNote.bind(this.notes)}
           />
         </main>
       </section>

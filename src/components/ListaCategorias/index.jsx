@@ -1,6 +1,26 @@
 import React, { Component } from 'react';
 
 class ListaCategorias extends Component {
+  constructor() {
+    super()
+    this.state = {
+      categories: []
+    }
+    this.newCategories = this.newCategories.bind(this)
+  }
+
+  componentDidMount() {
+    this.props.categories.subscribe(this.newCategories)
+  }
+
+  componentWillUnmount() {
+    this.props.categories.unsubscribe(this.newCategories)
+  }
+
+  newCategories(categories) {
+    this.setState({ ...this.state, categories })
+  }
+
   handleInputEvent(e) {
     if (e.key === "Enter") {
       let categoryValue = e.target.value
@@ -12,7 +32,7 @@ class ListaCategorias extends Component {
     return (
       <section>
         <ul>
-          {this.props.categories.map((category, index) => {
+          {this.props.categories.categories.map((category, index) => {
             return <li key={index}>{category}</li>
           })}
         </ul>
